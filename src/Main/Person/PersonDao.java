@@ -1,4 +1,4 @@
-package zadaca1;
+package Main.Person;
 
 import javax.swing.*;
 import java.io.FileReader;
@@ -11,7 +11,7 @@ public class PersonDao {
     /*
     This is my first DAO class. It Reads a file which gets parsed through a scanner that goes through each line of the file and adds the
     contents of each line to a separate String entry in a list called rawPersonData. The raw data then passes through a foreach loop that
-    separates the lines into readable String arrays. The for loop then tries to add a Person with the parameters from the list. If it
+    separates the lines into readable String arrays. The for loop then tries to add a person with the parameters from the list. If it
     fails there is a catch loop that does nothing, the point of this is skipping invalid entries(badly formatted entries) in the input,
     which is in this case person.txt.
      */

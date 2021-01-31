@@ -1,4 +1,4 @@
-package zadaca1;
+package Main.Person;
 
 import java.time.LocalDate;
 import java.time.Period;

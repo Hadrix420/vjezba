@@ -1,4 +1,4 @@
-package zadaca1;
+package Main.Person;
 
 public class RandomUtilGap {
     public static void Gap() {

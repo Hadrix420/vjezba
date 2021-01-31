@@ -1,4 +1,4 @@
-package zadaca2;
+package Main.Calculator;
 
 import java.util.Arrays;
 import java.util.List;
