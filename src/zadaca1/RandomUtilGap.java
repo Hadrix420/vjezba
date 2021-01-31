@@ -1,7 +1,7 @@
 package zadaca1;
 
 public class RandomUtilGap {
-    public void Gap() {
+    public static void Gap() {
         System.out.println();
         System.out.println("-------------------------------------");
         System.out.println();
