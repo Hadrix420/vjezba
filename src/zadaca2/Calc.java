@@ -43,7 +43,6 @@ public class Calc {
 
     public static void printAdd(){
         System.out.println("Result of addition is: " + add());
-
     }
     public static void printSub(){
         System.out.println("Result of substitution is: " + sub());
