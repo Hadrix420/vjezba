@@ -1,5 +1,6 @@
 package zadaca1;
 
+import javax.swing.*;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -29,14 +30,17 @@ public class PersonDao {
             e.printStackTrace();
         }
         List<Person> personList = new ArrayList<>();
+        int forlooptrack = 0;
         for (String line : rawPersonData) {
+            forlooptrack++;
             String[] input = line.split(";");
             String[] dateInput = line.split("-");
             String[] dateInputInt = dateInput[0].split(";");
             try {
                 personList.add(new Person(input[0], input[1], Integer.parseInt(dateInputInt[2]), Integer.parseInt(dateInput[1]), Integer.parseInt(dateInput[2])));
-            } catch (ArrayIndexOutOfBoundsException e) {
-                //does absolutely nothing just skips the invalid entry
+            } catch (RuntimeException e) {
+                String message = "Error on line "+forlooptrack+". Please check formatting of desired .txt file containing personal information. " + "Error message: " + e.getMessage();
+                JOptionPane.showMessageDialog(null,message,"Formatting error",JOptionPane.WARNING_MESSAGE);
             }
         }
         return personList;
