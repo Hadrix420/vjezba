@@ -1,6 +1,9 @@
 package Main.Person;
 
-import java.util.*;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 public class Main {
     public static void main(String[] args) {
@@ -20,9 +23,13 @@ public class Main {
         for (Person p : personListSorted) {
             System.out.println(p);
         }
-        personChecker.setSurnameSearch(true);
         personChecker.setNameOrSurnameForTest("Benjamin");
+        personChecker.setSurnameSearch(false);
         RandomUtilGap.Gap();
-
+        for (Person p : personListSorted) {
+            if (personChecker.test(p)) {
+                System.out.println(p);
+            }
+        }
     }
 }

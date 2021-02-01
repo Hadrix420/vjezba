@@ -71,23 +71,25 @@ public class PersonChecker implements Predicate<Person> {
     @Override
     public boolean test(Person p) {
         if (ageForTest != 0 && higherThan) {
-            return p.getAge() > ageForTest;
+            boolean testresult = p.getAge() >= ageForTest;
+            return testresult;
         }
         if (ageForTest != 0) {
-            return p.getAge() < ageForTest;
+            boolean testresult = p.getAge() <= ageForTest;
+            return testresult;
         }
         if (nameOrSurnameForTest != null && !isSurnameSearch) {
-            return p.getName().equals(nameOrSurnameForTest);
+            boolean testresult = p.getName().equals(nameOrSurnameForTest);
+            return testresult;
         }
         if (nameOrSurnameForTest != null) {
-            return p.getSurname().equals(nameOrSurnameForTest);
+            boolean testresult = p.getSurname().equals(nameOrSurnameForTest);
+            return testresult;
         }
-        if (!birthdayForTest.equals(LocalDate.of(0,0,0))||birthdayForTest!=null) {
-            return p.getBirthday().equals(birthdayForTest);
+        if (!birthdayForTest.equals(LocalDate.of(1,1,1))||birthdayForTest!=null) {
+            boolean testresult = p.getBirthday().equals(birthdayForTest);
+            return testresult;
         }
-        setNameOrSurnameForTest(null);
-        setAgeForTest(0);
-        setBithdayForTest(0,0,0);
         return false;
     }
 }
