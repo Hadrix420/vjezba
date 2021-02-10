@@ -1,35 +1,27 @@
 package Main.Person;
 
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.TreeSet;
+import java.time.LocalDate;
+import java.util.*;
+import java.util.function.Predicate;
 
 public class Main {
+
     public static void main(String[] args) {
         PersonChecker personChecker = new PersonChecker();
         PersonDao personDao = new PersonDao();
-        List<Person> personList = personDao.getAll();
-        for (Person p : personList) {
-            System.out.println(p);
-        }
-        RandomUtilGap.Gap();
-        Set<Person> personListNoDupes = new LinkedHashSet<>(personList);
-        for (Person p : personListNoDupes) {
-            System.out.println(p);
-        }
-        RandomUtilGap.Gap();
-        Set<Person> personListSorted = new TreeSet<>(personList);
-        for (Person p : personListSorted) {
-            System.out.println(p);
-        }
-        personChecker.setNameOrSurnameForTest("Benjamin");
-        personChecker.setSurnameSearch(false);
-        RandomUtilGap.Gap();
-        for (Person p : personListSorted) {
-            if (personChecker.test(p)) {
-                System.out.println(p);
-            }
-        }
     }
+    public static void removeFromCollection(Collection<Person> personCollection,Predicate<Person> removalTest){
+        personCollection.removeIf(removalTest);
+    }
+    public static void printTestedPersons(Collection<Person> personCollection, Predicate<Person> personPredicate){
+        personCollection.stream().filter(personPredicate).forEach(System.out::println);
+    }
+    public static void printPersons(Collection<Person> personCollection){
+        personCollection.forEach(System.out::println);
+    }
+
+
+
 }
+
+

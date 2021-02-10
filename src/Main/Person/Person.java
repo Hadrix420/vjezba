@@ -9,11 +9,22 @@ public class Person implements Comparable<Person> {
     private String name;
     private String surname;
     LocalDate birthday;
+    private Gender gender;
+    public Person(){
 
-    public Person(String nameInput, String surnameInput, int birthYearInput, int birthMonthInput, int birthDayOfMonthInput) {
+    }
+
+    public Person(String nameInput, String surnameInput, int birthYearInput, int birthMonthInput, int birthDayOfMonthInput, Gender gender) {
         this.name = nameInput;
         this.surname = surnameInput;
         this.birthday = LocalDate.of(birthYearInput, birthMonthInput, birthDayOfMonthInput);
+        this.gender=gender;
+    }
+    public Person (String nameInput, String surnameInput, LocalDate birthdayInput,Gender gender){
+        this.name=nameInput;
+        this.surname=surnameInput;
+        this.birthday=birthdayInput;
+        this.gender=gender;
     }
 
     public String toString() {
@@ -37,24 +48,31 @@ public class Person implements Comparable<Person> {
         return name;
     }
 
-    public void setName(String name) {
+    public Person setName(String name) {
         this.name = name;
+        return this;
     }
 
     public String getSurname() {
         return surname;
     }
 
-    public void setSurname(String surname) {
+    public Person setSurname(String surname) {
         this.surname = surname;
+        return this;
     }
 
     public LocalDate getBirthday() {
         return birthday;
     }
 
-    public void setBirthday(int birthYearInput, int birthMonthInput, int birthDayOfMonthInput) {
+    public Person setBirthday(int birthYearInput, int birthMonthInput, int birthDayOfMonthInput) {
         this.birthday = LocalDate.of(birthYearInput, birthMonthInput, birthDayOfMonthInput);
+        return this;
+    }
+    public Person setBirthday(LocalDate birthday){
+        this.birthday = birthday;
+        return this;
     }
 
     public int getAge() {
@@ -63,8 +81,13 @@ public class Person implements Comparable<Person> {
         return gap.getYears();
     }
 
-    public void setAge() {
+    public Person setAge() {
         System.out.println("Can't do that : ^ )");
+        return this;
+    }
+    public Person setGender(Gender gender){
+        this.gender=gender;
+        return this;
     }
 
     @Override

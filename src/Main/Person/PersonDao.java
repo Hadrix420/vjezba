@@ -1,48 +1,50 @@
 package Main.Person;
 
+import java.sql.*;
 import javax.swing.*;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.time.LocalDate;
+import java.util.*;
+import java.util.concurrent.Executor;
 
 public class PersonDao {
-    /*
-    This is my first DAO class. It Reads a file which gets parsed through a scanner that goes through each line of the file and adds the
-    contents of each line to a separate String entry in a list called rawPersonData. The raw data then passes through a foreach loop that
-    separates the lines into readable String arrays. The for loop then tries to add a person with the parameters from the list. If it
-    fails there is a catch loop that does nothing, the point of this is skipping invalid entries(badly formatted entries) in the input,
-    which is in this case person.txt.
-     */
-    public List<Person> getAll() {
-        List<String> rawPersonData = new ArrayList<>();
-        try (FileReader fr = new FileReader("person.txt");
-             Scanner sc = new Scanner(fr)) {
-            while (sc.hasNextLine()) {
-                String rawData = sc.nextLine();
-                if (!rawData.equals("")) {
-                    rawPersonData.add(rawData);
-                }
+    private String username;
+    private String password;
+    private String url;
+    public Collection<Person> getAll() {
+        Collection<Person> personCollection = new ArrayList<>();
+        username="root";
+        password="root";
+        url="jdbc:mysql://localhost:3306/person";
 
+        try(Connection connection = DriverManager.getConnection(url,username,password);
+            Statement stmt = connection.createStatement();
+            ResultSet resSet = stmt.executeQuery("SELECT * FROM PERSON")) {
+            while(resSet.next()){
+                personCollection.add(new Person(resSet.getString(2),resSet.getString(3),resSet.getDate(4).toLocalDate(),resSet.getString(5).equalsIgnoreCase("male")? Gender.MALE:Gender.FEMALE));
             }
-        } catch (IOException e) {
-            e.printStackTrace();
+
         }
-        List<Person> personList = new ArrayList<>();
-        int forlooptrack = 0;
-        for (String line : rawPersonData) {
-            forlooptrack++;
-            String[] input = line.split(";");
-            String[] dateInput = line.split("-");
-            String[] dateInputInt = dateInput[0].split(";");
-            try {
-                personList.add(new Person(input[0], input[1], Integer.parseInt(dateInputInt[2]), Integer.parseInt(dateInput[1]), Integer.parseInt(dateInput[2])));
-            } catch (RuntimeException e) {
-                String message = "Error on line "+forlooptrack+". Please check formatting of desired .txt file containing personal information. " + "Error message: " + e.getMessage();
-                JOptionPane.showMessageDialog(null,message,"Formatting error",JOptionPane.WARNING_MESSAGE);
-            }
+        catch(Exception e) {
+            System.out.println(e.getMessage());
         }
-        return personList;
+        return personCollection;
     }
+
+    public Person retrievePerson(int id){
+        try(Connection connection= DriverManager.getConnection(url,username,password);
+            PreparedStatement prstmt = connection.prepareStatement("SELECT * FROM PERSON WHERE ID = ?")){
+            prstmt.setInt(1,id);
+            ResultSet resSet = prstmt.executeQuery();
+            Person p = new Person();
+            p.setBirthday(resSet.getDate("birthday").toLocalDate()).setName("name").setSurname("surname").setGender("male".equalsIgnoreCase(resSet.getString("gender"))? Gender.MALE : Gender.FEMALE);
+            return p;
+        }
+        catch(SQLException e){
+            System.out.println(e.getMessage());
+        }
+        return new Person("INVALID","RETURN",0,0,0, Gender.MALE);
+    }
+
 }
